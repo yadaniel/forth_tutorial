@@ -1,0 +1,12 @@
+pc => gforth
+stm32 => mecrisp forth
+
+find out if usefull on microcontroller
+    * possible use case => replace command shell
+    * possible use case => replace bootloader
+
+# commands words
+key -> read key
+emit -> print top value
+
+
