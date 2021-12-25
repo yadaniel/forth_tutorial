@@ -73,4 +73,4 @@ char <c> emit   -> identity <c>
 compiletoflash : wait $1FFFFF 0 do nop loop ;   -> append to words, will be present after reset
 eraseflash                                      -> will erase those user defined words
 
-
+unused          -> free memory, ram or flash depending on compile mode

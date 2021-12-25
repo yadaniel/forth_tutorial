@@ -20,6 +20,12 @@ except Exception as e:
 
 with open(sys.argv[1]) as file:
     for line in file.readlines():
+        if line.strip() == "":
+            continue
+        if line.strip().startswith("\ "):
+            continue
+        if line.strip().startswith("( "):
+            continue
         com.write(bytes(line, "ascii"))
         ans = str(com.read(100), "ascii")
         print(f"send: {line}", end="")

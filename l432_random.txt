@@ -1,0 +1,26 @@
+$40000000 constant PERIPH_BASE
+PERIPH_BASE $08000000 + constant AHB2PERIPH_BASE
+AHB2PERIPH_BASE $08060800 + constant RNG_BASE
+
+PERIPH_BASE $00020000 + constant AHB1PERIPH_BASE 
+AHB1PERIPH_BASE $1000 + constant RCC_BASE 
+RCC_BASE $4C + constant RCC_AHB2ENR
+RCC_BASE $2C + constant RCC_AHB2RSTR
+
+RNG_BASE constant RNG_CR
+RNG_BASE 8 + constant RNG_DR
+
+\ RCC_AHB2RSTR RNGRST
+\ RCC_AHB2ENR RNGEN
+
+: rng_clock RCC_AHB2ENR  @ $00040000 or RCC_AHB2ENR ! ;
+: rng_reset1 RCC_AHB2RSTR @ $00040000 or RCC_AHB2RSTR ! ;
+: rng_reset0 RCC_AHB2RSTR @ $FFFBFFFF and RCC_AHB2RSTR ! ;
+: rng_reset rng_reset1 rng_reset0 ;
+: rng_enable 4 RNG_CR ! ;
+: rng_init rng_clock rng_enable rng_reset ;
+: rng_rand RNG_DR @ ; 
+
+: rng_clock_ RCC_AHB2ENR @ dup hex. $00040000 or dup hex. RCC_AHB2ENR ! ;
+: rng_enable_ RNG_CR @ hex. 4 RNG_CR ! RNG_CR @ hex. ;
+
