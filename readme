@@ -5,8 +5,45 @@ find out if usefull on microcontroller
     * possible use case => replace command shell
     * possible use case => replace bootloader
 
-# commands words
-key -> read key
-emit -> print top value
+# commands words (top = s[0], one-below = s[-1])
+key     -> read key
+emit    -> print top
+.       -> pop top
+.s      -> print stack
+dup     -> duplicate top
+2dup    -> duplicate top 2 values
+over    -> copy s[-1] to top
+2over   -> copy s[-3,-2] to top
+\<space>    -> comment
+(<space>)   -> comment
+:<space><word> ;    -> define new word
+words   -> show all compiled words
+variable bar    -> create variable
+100 bar !       -> store 100 in variable
+bar @           -> fetch variable
 
+0   ->  false (all bits are cleared)
+-1  ->  true (all bits are set)
+=   -> equal ( n n -> n )
+= invert -> not equal
+
+# loop example => must be compiled
+: myloop 10 0 do 1 . loop ;     -> print 1 in the loop from 0 to 9
+: myloop 10 0 do i . loop ;     -> print 0 to 9 in the loop
+
+# string example => must be compiled
+: say-hi cr ." hello " ;        -> space must follow ."
+
+#define GPIOA_BASE            (AHB2PERIPH_BASE + 0x0000UL)
+#define GPIOB_BASE            (AHB2PERIPH_BASE + 0x0400UL)
+#define AHB2PERIPH_BASE       (PERIPH_BASE + 0x08000000UL)
+#define PERIPH_BASE           (0x40000000UL) /*!< Peripheral base address */
+0x40000000 + 0x08000000             => 0x4800_0000
+0x40000000 + 0x08000000 + 0x0400    => 0x4800_0400
+
+$48000000 constant GPIOA
+$48000400 constant GPIOB
+GPIOB @ variable GPIOB_VALUE !
+GPIOB_VALUE @ 64 + GPIOB_VALUE !
+GPIOB_VALUE @ hex .
 
