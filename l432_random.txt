@@ -8,16 +8,19 @@ RCC_BASE $4C + constant RCC_AHB2ENR
 RCC_BASE $2C + constant RCC_AHB2RSTR
 
 RNG_BASE constant RNG_CR
+RNG_BASE 4 + constant RNG_SR
 RNG_BASE 8 + constant RNG_DR
 
 \ RCC_AHB2RSTR RNGRST
 \ RCC_AHB2ENR RNGEN
 
-: rng_clock RCC_AHB2ENR  @ $00040000 or RCC_AHB2ENR ! ;
+\ : rng_clock RCC_AHB2ENR  @ $00040000 or RCC_AHB2ENR ! ;
+: rng_clock RCC_AHB2ENR  @ $00042000 or RCC_AHB2ENR ! ;
 : rng_reset1 RCC_AHB2RSTR @ $00040000 or RCC_AHB2RSTR ! ;
 : rng_reset0 RCC_AHB2RSTR @ $FFFBFFFF and RCC_AHB2RSTR ! ;
 : rng_reset rng_reset1 rng_reset0 ;
-: rng_enable 4 RNG_CR ! ;
+\ : rng_enable 4 RNG_CR ! ;
+: rng_enable $20 RNG_CR ! 4 RNG_CR ! ;     \ disable error checking and then enable RNG
 : rng_init rng_clock rng_enable rng_reset ;
 : rng_rand RNG_DR @ ; 
 

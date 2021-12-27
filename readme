@@ -22,6 +22,11 @@ variable bar    -> create variable
 bar @           -> fetch variable
 quit            -> reset stack
 
+1 constant CONST    -> define constant
+1 variable var      -> initialize variable, mecrisp requires and consumes init value, gforth ignores TOS value
+1 value val         -> not supported by mecrisp, gforth supports values
+                    -> ANS forth has values which don't require @
+
 %1100       -> binary constant
 %FFFF       -> hex constant
 #100        -> decimal constant

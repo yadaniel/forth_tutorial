@@ -8,6 +8,7 @@ $48000414 constant GPIOB_ODR
 : led3_on 8 GPIOB_ODR ! ; 
 : led3_off 0 GPIOB_ODR ! ; 
 : wait $1FFFFF 0 do i drop loop ; 
-: blink led3_init begin led3_on wait led3_off wait again ; 
-blink 
-\ to start blink NEWLINE is required
+: blink led3_init begin led3_on wait led3_off wait again ;  ( TODO: make possible to break the loop )
+: blink_key led3_init begin led3_on wait led3_off wait key? if exit then again ; 
+blink_key \ to start blink NEWLINE is required
+
